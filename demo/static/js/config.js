@@ -3,7 +3,12 @@
 const CONFIG = {
     // API endpoints
     API: {
-        PROJECTS: '/api/projects'
+        PROJECTS: '/api/projects',
+        AI_ANALYZE: '/api/ai/analyze',
+        AI_CATEGORIZE: '/api/ai/categorize',
+        AI_EXTRACT: '/api/ai/extract',
+        AI_GENERATE_TAGS: '/api/ai/generate-tags',
+        AI_GENERATE_IMPACT: '/api/ai/generate-impact'
     },
     
     // UI constants

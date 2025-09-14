@@ -3,35 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Summary Dashboard</title>
+    <title>GitAI - Project Summary Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8'
+                        }
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="h-screen bg-gray-50">
+<body class="h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-inter">
     <div id="app" class="h-screen flex">
-        <!-- 侧边栏 -->
-        <div class="w-80 bg-white border-r border-gray-200 flex flex-col">
-            <div class="p-4 border-b border-gray-200">
-                <h1 class="text-xl font-bold text-gray-900 mb-4">Project Summary Dashboard</h1>
+        <!-- Enhanced Sidebar -->
+        <div id="sidebar" class="resizable-panel bg-white/95 backdrop-blur-sm border-r border-gray-200/50 shadow-xl flex flex-col" style="width: 320px; min-width: 250px; max-width: 500px;">
+            <div class="p-6 border-b border-gray-200/50">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <i data-lucide="activity" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">GitAI Dashboard</h1>
+                        <p class="text-sm text-gray-500">AI-Powered Insights</p>
+                    </div>
+                </div>
                 
-                <!-- Search -->
+                <!-- Enhanced Search -->
                 <div class="relative mb-4">
                     <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
                     <input
                         type="text"
                         placeholder="Search project updates..."
-                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200 text-sm"
                         id="searchInput"
                     />
                 </div>
 
-                <!-- Filters -->
-                <div class="space-y-2 mb-4">
-                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" id="projectFilter">
+                <!-- Enhanced Filters -->
+                <div class="space-y-3 mb-4">
+                    <select class="w-full px-3 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200 text-sm" id="projectFilter">
                         <option value="all">All Projects</option>
                     </select>
-                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" id="typeFilter">
+                    <select class="w-full px-3 py-3 border border-gray-200 rounded-xl bg-gray-50/50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition-all duration-200 text-sm" id="typeFilter">
                         <option value="all">All Types</option>
                         <option value="Feature Development">Feature Development</option>
                         <option value="Security Update">Security Update</option>
@@ -41,26 +69,32 @@
                 </div>
             </div>
 
-            <!-- Project Overview -->
-            <div class="p-4 border-b border-gray-200">
-                <h3 class="text-sm font-semibold text-gray-700 mb-3">Active Projects</h3>
+            <!-- Enhanced Project Overview -->
+            <div class="p-6 border-b border-gray-200/50 flex-1">
+                <h3 class="text-sm font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                    <i data-lucide="folder" class="w-4 h-4"></i>
+                    Active Projects
+                </h3>
                 <div class="space-y-2" id="projectsList">
                     <!-- Project list will be dynamically generated here -->
                 </div>
             </div>
 
         </div>
+        
+        <!-- Resize handle for sidebar -->
+        <div class="resize-handle resize-handle-vertical" data-target="sidebar"></div>
 
-        <!-- Main Content Area -->
+        <!-- Enhanced Main Content Area -->
         <div class="flex-1 flex">
-            <!-- Project List -->
-            <div class="w-96 bg-white border-r border-gray-200 overflow-y-auto">
-                <div class="p-4 border-b border-gray-200">
+            <!-- Enhanced Project List -->
+            <div id="updates-panel" class="resizable-panel bg-white/95 backdrop-blur-sm border-r border-gray-200/50 shadow-lg overflow-y-auto" style="width: 384px; min-width: 300px; max-width: 600px;">
+                <div class="p-6 border-b border-gray-200/50 bg-gradient-to-r from-blue-50/50 to-indigo-50/50">
                     <div class="flex items-center justify-between">
-                        <h2 class="text-lg font-semibold text-gray-900">
-                            Updates (<span id="updateCount">0</span>)
+                        <h2 class="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                            <i data-lucide="list" class="w-5 h-5 text-blue-600"></i>
+                            Updates (<span id="updateCount" class="text-blue-600">0</span>)
                         </h2>
-                        <i data-lucide="filter" class="w-4 h-4 text-gray-400"></i>
                     </div>
                 </div>
                 
@@ -68,15 +102,34 @@
                     <!-- Updates list will be dynamically generated here -->
                 </div>
             </div>
+            
+            <!-- Resize handle for updates panel -->
+            <div class="resize-handle resize-handle-vertical" data-target="updates-panel"></div>
 
-            <!-- Detail View -->
-            <div class="flex-1 bg-white overflow-y-auto">
-                <div id="detailView" class="p-6">
+            <!-- Enhanced Detail View -->
+            <div id="detail-panel" class="flex-1 bg-gradient-to-br from-white to-gray-50/30 overflow-y-auto" style="min-width: 400px;">
+                <div id="detailView" class="p-8">
                     <div class="flex items-center justify-center h-full text-gray-500">
-                        <div class="text-center">
-                            <i data-lucide="folder-open" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
-                            <p class="text-lg font-medium mb-2">Select a project update to view details</p>
-                            <p class="text-sm">Browse your project summaries and AI-generated insights</p>
+                        <div class="text-center max-w-md mx-auto mt-32">
+                            <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
+                                <i data-lucide="sparkles" class="w-10 h-10 text-blue-600"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-4">Select a project update to view details</h2>
+                            <p class="text-gray-600 mb-4">Browse your project summaries and AI-generated insights</p>
+                            <div class="flex items-center justify-center gap-4 text-sm text-gray-500">
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="brain" class="w-4 h-4"></i>
+                                    <span>AI Analysis</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="code" class="w-4 h-4"></i>
+                                    <span>Code Insights</span>
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <i data-lucide="trending-up" class="w-4 h-4"></i>
+                                    <span>Impact Tracking</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,6 +142,7 @@
     <script src="{{ url_for('static', filename='js/modules/uiUtils.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modules/dataManager.js') }}"></script>
     <script src="{{ url_for('static', filename='js/modules/uiComponents.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/resizablePanels.js') }}"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>

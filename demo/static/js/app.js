@@ -7,6 +7,7 @@ class ProjectDashboardApp {
     constructor() {
         this.dataManager = null;
         this.uiComponents = null;
+        this.resizablePanels = null;
         this.isInitialized = false;
     }
 
@@ -22,6 +23,9 @@ class ProjectDashboardApp {
             
             // Initialize UI components
             this.uiComponents = new UIComponents(this.dataManager);
+            
+            // Initialize resizable panels
+            this.resizablePanels = new ResizablePanels();
             
             // Setup event listeners
             this.setupEventListeners();
