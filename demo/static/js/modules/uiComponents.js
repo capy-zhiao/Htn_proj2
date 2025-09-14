@@ -139,8 +139,8 @@ class UIComponents {
                         <div class="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-lg">
                             <i data-lucide="sparkles" class="w-10 h-10 text-blue-600"></i>
                         </div>
-                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Select a project update to view details</h2>
-                        <p class="text-gray-600 mb-6">Browse your project summaries and AI-generated insights</p>
+                        <h2 class="text-2xl font-bold text-gray-900 mb-4">Select a conversation to view details</h2>
+                        <p class="text-gray-600 mb-6">Browse your development conversations and intelligent insights</p>
                         <div class="flex items-center justify-center gap-6 text-sm text-gray-500">
                             <div class="flex items-center gap-2">
                                 <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
@@ -152,13 +152,13 @@ class UIComponents {
                                 <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
                                     <i data-lucide="code" class="w-4 h-4 text-green-600"></i>
                                 </div>
-                                <span class="font-medium">Code Insights</span>
+                                <span class="font-medium">Code Tracking</span>
                             </div>
                             <div class="flex items-center gap-2">
                                 <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
                                     <i data-lucide="trending-up" class="w-4 h-4 text-purple-600"></i>
                                 </div>
-                                <span class="font-medium">Impact Tracking</span>
+                                <span class="font-medium">Dev Insights</span>
                             </div>
                         </div>
                     </div>
@@ -188,8 +188,8 @@ class UIComponents {
                             </div>
                         </div>
                         <div class="flex gap-2 ml-4">
-                            <button class="p-3 text-gray-400 hover:text-blue-600 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-200 border border-transparent hover:border-blue-200">
-                                <i data-lucide="external-link" class="w-5 h-5"></i>
+                            <button id="download-btn-${selectedProject.id}" class="download-conversation p-3 text-gray-400 hover:text-green-600 rounded-xl hover:bg-white/50 backdrop-blur-sm transition-all duration-200 border border-transparent hover:border-green-200" title="Download conversation">
+                                <i data-lucide="download" class="w-5 h-5"></i>
                             </button>
                         </div>
                     </div>
@@ -315,6 +315,9 @@ class UIComponents {
         // Initialize icons after rendering
         setTimeout(() => {
             UIUtils.initializeIcons();
+            
+            // Add download functionality
+            this.setupDownloadButton(selectedProject);
         }, 100);
     }
 
@@ -451,6 +454,286 @@ class UIComponents {
         
         // Fallback demo text for testing purposes
         return ``;
+    }
+    /**
+     * Setup download button functionality
+     */
+    setupDownloadButton(project) {
+        const downloadBtn = document.getElementById(`download-btn-${project.id}`);
+        if (!downloadBtn) return;
+
+        downloadBtn.addEventListener('click', () => {
+            this.showDownloadOptions(project);
+        });
+    }
+
+    /**
+     * Show download format options
+     */
+    showDownloadOptions(project) {
+        const modal = document.createElement('div');
+        modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+        modal.innerHTML = `
+            <div class="bg-white rounded-lg p-6 max-w-md mx-4 animate-fade-in-up">
+                <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                    <i data-lucide="download" class="w-5 h-5"></i>
+                    Download Conversation
+                </h3>
+                <p class="text-gray-600 mb-6">Choose your preferred format:</p>
+                
+                <div class="space-y-3">
+                    <button id="download-md-btn" class="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="file-text" class="w-5 h-5 text-blue-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">Markdown (.md)</div>
+                                <div class="text-sm text-gray-500">Perfect for GitHub, documentation</div>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <button id="download-txt-btn" class="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-green-50 hover:border-green-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="file" class="w-5 h-5 text-green-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">Plain Text (.txt)</div>
+                                <div class="text-sm text-gray-500">Simple, readable format</div>
+                            </div>
+                        </div>
+                    </button>
+                    
+                    <button id="download-json-btn" class="w-full p-4 text-left border border-gray-200 rounded-lg hover:bg-purple-50 hover:border-purple-300 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="code" class="w-5 h-5 text-purple-600"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium">JSON (.json)</div>
+                                <div class="text-sm text-gray-500">Structured data format</div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+                
+                <button id="close-download-modal" class="mt-6 w-full py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">Cancel</button>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Initialize icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Handle download buttons
+        document.getElementById('download-md-btn').addEventListener('click', () => {
+            this.downloadAsMarkdown(project);
+            modal.remove();
+        });
+        
+        document.getElementById('download-txt-btn').addEventListener('click', () => {
+            this.downloadAsText(project);
+            modal.remove();
+        });
+        
+        document.getElementById('download-json-btn').addEventListener('click', () => {
+            this.downloadAsJSON(project);
+            modal.remove();
+        });
+        
+        // Handle close
+        document.getElementById('close-download-modal').addEventListener('click', () => {
+            modal.remove();
+        });
+        
+        // Close on background click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.remove();
+            }
+        });
+    }
+
+    /**
+     * Download conversation as Markdown
+     */
+    downloadAsMarkdown(project) {
+        const markdown = `# ${project.title}
+
+## Project Information
+- **Project:** ${project.projectName}
+- **Type:** ${project.type}
+- **Date:** ${UIUtils.formatTimestamp(project.timestamp)}
+- **AI Model:** ${project.aiModel}
+- **Tags:** ${project.tags.join(', ')}
+
+## Summary
+${project.summary}
+
+## New Features and Capabilities
+${project.functions.length > 0 ? 
+    project.functions.map(func => `- ${func}`).join('\n') : 
+    'No specific features identified'
+}
+
+## Bug Fixes
+${project.bugFixes.length > 0 ? 
+    project.bugFixes.map(fix => `- ${fix}`).join('\n') : 
+    'No specific bug fixes identified'
+}
+
+## Impact and Results
+${project.impact}
+
+## Code Changes
+\`\`\`
+${typeof project.codeChanges === 'string' ? 
+    project.codeChanges : 
+    project.codeChanges?.before ? 
+        `Before:\n${project.codeChanges.before}\n\nAfter:\n${project.codeChanges.after}` : 
+        'No code changes detected'
+}
+\`\`\`
+
+## Conversation Details
+- **Message Count:** ${project.messageCount}
+- **Participants:** ${project.participants.join(', ')}
+
+---
+*Generated by CodeMind - Development Intelligence*
+`;
+
+        this.downloadFile(markdown, `${this.sanitizeFilename(project.title)}.md`, 'text/markdown');
+        this.showDownloadSuccess('Markdown file downloaded!');
+    }
+
+    /**
+     * Download conversation as plain text
+     */
+    downloadAsText(project) {
+        const text = `${project.title}
+${'='.repeat(project.title.length)}
+
+Project: ${project.projectName}
+Type: ${project.type}
+Date: ${UIUtils.formatTimestamp(project.timestamp)}
+AI Model: ${project.aiModel}
+Tags: ${project.tags.join(', ')}
+
+SUMMARY
+-------
+${project.summary}
+
+NEW FEATURES AND CAPABILITIES
+-----------------------------
+${project.functions.length > 0 ? 
+    project.functions.map(func => `• ${func}`).join('\n') : 
+    'No specific features identified'
+}
+
+BUG FIXES
+---------
+${project.bugFixes.length > 0 ? 
+    project.bugFixes.map(fix => `• ${fix}`).join('\n') : 
+    'No specific bug fixes identified'
+}
+
+IMPACT AND RESULTS
+------------------
+${project.impact}
+
+CODE CHANGES
+------------
+${typeof project.codeChanges === 'string' ? 
+    project.codeChanges : 
+    project.codeChanges?.before ? 
+        `Before:\n${project.codeChanges.before}\n\nAfter:\n${project.codeChanges.after}` : 
+        'No code changes detected'
+}
+
+CONVERSATION DETAILS
+--------------------
+Message Count: ${project.messageCount}
+Participants: ${project.participants.join(', ')}
+
+Generated by CodeMind - Development Intelligence
+`;
+
+        this.downloadFile(text, `${this.sanitizeFilename(project.title)}.txt`, 'text/plain');
+        this.showDownloadSuccess('Text file downloaded!');
+    }
+
+    /**
+     * Download conversation as JSON
+     */
+    downloadAsJSON(project) {
+        const jsonData = {
+            ...project,
+            exportedAt: new Date().toISOString(),
+            exportedBy: 'CodeMind',
+            version: '1.0'
+        };
+
+        const json = JSON.stringify(jsonData, null, 2);
+        this.downloadFile(json, `${this.sanitizeFilename(project.title)}.json`, 'application/json');
+        this.showDownloadSuccess('JSON file downloaded!');
+    }
+
+    /**
+     * Utility function to download a file
+     */
+    downloadFile(content, filename, mimeType) {
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    /**
+     * Sanitize filename for download
+     */
+    sanitizeFilename(filename) {
+        return filename
+            .replace(/[^a-z0-9\s\-_]/gi, '') // Remove special characters
+            .replace(/\s+/g, '-') // Replace spaces with hyphens
+            .toLowerCase()
+            .substring(0, 50); // Limit length
+    }
+
+    /**
+     * Show download success message
+     */
+    showDownloadSuccess(message) {
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in-up';
+        toast.innerHTML = `
+            <div class="flex items-center gap-2">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(toast);
+        
+        // Initialize icon
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.remove();
+        }, 3000);
     }
 }
 
