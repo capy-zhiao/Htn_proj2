@@ -450,7 +450,7 @@ class UIComponents {
         }
         
         // Fallback demo text for testing purposes
-        return `Demo project: ${project.name} - This is placeholder text for testing the UI layout and functionality.`;
+        return ``;
     }
 }
 
