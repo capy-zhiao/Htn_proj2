@@ -1,4 +1,4 @@
-# HackTheNorth Project - AI-Powered Conversation Logger & Dashboard
+# CodeMindHack - AI-Powered Conversation Logger & Dashboard
 
 A comprehensive system for logging, analyzing, and visualizing AI conversations with intelligent code change tracking and project management capabilities.
 
