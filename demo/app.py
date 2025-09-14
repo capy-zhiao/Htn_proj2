@@ -258,7 +258,7 @@ def get_projects():
                     'summary': summary,
                     'type': get_type_from_tag(tag),
                     'timestamp': timestamp,
-                    'aiModel': 'Gemini 1.5 Pro',
+                    'aiModel': 'Openai',
                     'functions': extract_functions(data),
                     'bugFixes': extract_bug_fixes(data),
                     'tags': extract_tags(data),
