@@ -1,0 +1,14 @@
+[project]
+name = "mcp-chat-logger"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp[cli]>=1.6.0",
+    "boto3>=1.34.0",
+    "pydantic>=2.0.0",
+    "openai>=1.0.0",
+    "fastmcp>=2.12.3",
+    "google-generativeai>=0.8.5",
+]

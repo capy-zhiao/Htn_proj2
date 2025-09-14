@@ -1,0 +1,12 @@
+{
+  "name": "project-summary-dashboard",
+  "version": "1.0.0",
+  "description": "A dashboard to display project summaries from chat logs",
+  "scripts": {
+    "start": "python app.py",
+    "install-deps": "pip install -r requirements.txt"
+  },
+  "keywords": ["dashboard", "project", "summary", "ai", "python", "flask"],
+  "author": "Your Name",
+  "license": "MIT"
+}

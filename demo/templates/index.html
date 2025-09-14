@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Summary Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="h-screen bg-gray-50">
+    <div id="app" class="h-screen flex">
+        <!-- 侧边栏 -->
+        <div class="w-80 bg-white border-r border-gray-200 flex flex-col">
+            <div class="p-4 border-b border-gray-200">
+                <h1 class="text-xl font-bold text-gray-900 mb-4">Project Summary Dashboard</h1>
+                
+                <!-- Search -->
+                <div class="relative mb-4">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4"></i>
+                    <input
+                        type="text"
+                        placeholder="Search project updates..."
+                        class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        id="searchInput"
+                    />
+                </div>
+
+                <!-- Filters -->
+                <div class="space-y-2 mb-4">
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" id="projectFilter">
+                        <option value="all">All Projects</option>
+                    </select>
+                    <select class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" id="typeFilter">
+                        <option value="all">All Types</option>
+                        <option value="Feature Development">Feature Development</option>
+                        <option value="Security Update">Security Update</option>
+                        <option value="Performance">Performance</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Project Overview -->
+            <div class="p-4 border-b border-gray-200">
+                <h3 class="text-sm font-semibold text-gray-700 mb-3">Active Projects</h3>
+                <div class="space-y-2" id="projectsList">
+                    <!-- Project list will be dynamically generated here -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 flex">
+            <!-- Project List -->
+            <div class="w-96 bg-white border-r border-gray-200 overflow-y-auto">
+                <div class="p-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">
+                            Updates (<span id="updateCount">0</span>)
+                        </h2>
+                        <i data-lucide="filter" class="w-4 h-4 text-gray-400"></i>
+                    </div>
+                </div>
+                
+                <div class="divide-y divide-gray-200" id="updatesList">
+                    <!-- Updates list will be dynamically generated here -->
+                </div>
+            </div>
+
+            <!-- Detail View -->
+            <div class="flex-1 bg-white overflow-y-auto">
+                <div id="detailView" class="p-6">
+                    <div class="flex items-center justify-center h-full text-gray-500">
+                        <div class="text-center">
+                            <i data-lucide="folder-open" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                            <p class="text-lg font-medium mb-2">Select a project update to view details</p>
+                            <p class="text-sm">Browse your project summaries and AI-generated insights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load modules in correct order -->
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/uiUtils.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/dataManager.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modules/uiComponents.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+/* Custom utility classes */
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Additional custom styles for the dashboard */
+.project-card {
+    transition: all 0.2s ease-in-out;
+}
+
+.project-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.selected-project {
+    border-right: 2px solid #3b82f6;
+    background-color: #eff6ff;
+}
+
+/* Loading animation */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Code block styling */
+.code-block {
+    background-color: #1f2937;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.code-header {
+    background-color: #374151;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: #d1d5db;
+    border-bottom: 1px solid #4b5563;
+}
+
+.code-content {
+    padding: 1rem;
+    font-size: 0.875rem;
+    color: #f3f4f6;
+    overflow-x: auto;
+}
+
+/* Tag styling */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.status-feature {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+}
+
+.status-security {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+.status-performance {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.status-other {
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+/* Responsive design improvements */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-width: 320px;
+    }
+    
+    .updates-list {
+        width: 100%;
+    }
+    
+    .detail-view {
+        display: none;
+    }
+    
+    .detail-view.mobile-visible {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        z-index: 50;
+    }
+}
